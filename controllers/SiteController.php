@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\UserForm;
 
 class SiteController extends Controller
 {
@@ -129,5 +130,15 @@ class SiteController extends Controller
     public function actionPrintNumber()
     {
         return 100;
+    }
+
+    public function actionUser()
+    {
+        $model = new UserForm;
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            Yii::$app->session->setFlash('success', 'You have entered the data correctly');
+        } else {
+            return $this->render('userForm', ['model' => $model]);
+        }
     }
 }
